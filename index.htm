@@ -1,0 +1,1980 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>McLighting</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="shortcut icon" href="https://cdn.rawgit.com/toblum/McLightingUI/1346e334/material/McLightingLogo/favicon.ico" type="image/x-icon" />
+        <link rel="apple-touch-icon" href="https://cdn.rawgit.com/toblum/McLightingUI/1346e334/material/McLightingLogo/apple-touch-icon.png">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+        <style>
+* {
+  background-repeat: no-repeat;
+  padding: 0;
+  margin: 0;
+}
+*, :after, :before {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
+html {
+    font-size:62.5%
+}
+body {
+    font-size:1.5em;
+    line-height:1.6;
+    font-weight:400;
+    font-family:"Raleway","HelveticaNeue","Helvetica Neue",Helvetica,Arial,sans-serif;
+    color:#222
+}
+button, [type="button"], [type="reset"], [type="submit"], [role="button"] {
+  cursor: pointer;
+}
+button, input, optgroup, select, textarea {
+  font: inherit; /* Specify font inheritance of form elements */
+}
+button {
+  overflow: visible; /* Address `overflow` set to `hidden` in IE 8/9/10/11 */
+}
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  border-style: 0;
+  padding: 0;
+}
+button:-moz-focusring, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  outline: 0;
+  border: 0;
+}
+button, html [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button; /* Correct the inability to style clickable types in iOS */
+}
+button, select {
+  text-transform: none; /* Firefox 40+, Internet Explorer 11- */
+}
+button, input, select, textarea {
+  background-color: transparent;
+  border-style: none;
+  color: inherit;
+}
+.btn__content {
+  align-items: center;
+  border-radius: inherit;
+  color: inherit;
+  display: flex;
+  flex: 1 0 auto;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  white-space: nowrap;
+  width: inherit;
+}
+.btn {
+  align-items: center;
+  border-radius: 6px;
+  display: inline-flex;
+  width: 210px;
+  height: 36px;
+  flex: 0 0 auto;
+  font-size: 14px;
+  font-weight: 500;
+  justify-content: center;
+  margin: 6px 8px;
+  padding: 0 16px;
+  min-width: 88px;
+  outline: 0;
+  text-decoration: none;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1), color 1ms;
+  position: relative;
+  vertical-align: middle;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.btn--block {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    margin: auto;
+    width: 80%;
+    color: #FFF;
+    background-color: #4caf50!important;
+    border-color: #4caf50!important;
+}
+.btn.uppercase {
+  width: 260px;
+  text-transform: uppercase;
+}
+.btn--bottom {
+    bottom: 36px;
+    right: 16px;
+    position: absolute;
+    margin: 0;
+    min-width: 0;
+    height: 56px;
+    width: 56px;
+    padding: 0;
+    border-radius: 50%;
+    z-index: 4;
+    color: #fff;
+    background-color: #e91e63!important;
+    border-color: #e91e63!important;
+    will-change: box-shadow;
+    webkit-box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+    box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+}
+.icon {
+  align-items: center;
+  display: inline-flex;
+  -webkit-font-feature-settings: 'liga';
+          font-feature-settings: 'liga';
+  font-size: 24px;
+  justify-content: center;
+  line-height: 1;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
+  vertical-align: text-bottom;
+}
+.icon.icon--link {
+  cursor: pointer;
+}
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 1);
+}
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.8);
+}
+/* The Modal (background) */
+#modal {
+  position: fixed;
+  z-index: 1;
+  padding-top: 150px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.modal-content {
+  text-align: center;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 50px;
+  font-size: 44px;
+  font-weight: 600;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.container {
+  flex: 1 1 100%;
+  margin: auto;
+  padding: 24px;
+}
+.layout {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+.layout.row {
+  flex-direction: row;
+}
+.layout.row.reverse {
+  flex-direction: row-reverse;
+}
+.layout.column {
+  flex-direction: column;
+}
+.layout.column.reverse {
+  flex-direction: column-reverse;
+}
+.layout.column > .flex {
+  max-width: 100%;
+}
+.layout.wrap {
+  flex-wrap: wrap;
+}
+.elevation-3 {
+  box-shadow: 0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12) !important;
+}
+.elevation-6 {
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12) !important;
+}
+.elevation-9 {
+  box-shadow: 0px 5px 6px -3px rgba(0,0,0,0.2), 0px 9px 12px 1px rgba(0,0,0,0.14), 0px 3px 16px 2px rgba(0,0,0,0.12) !important;
+}
+.elevation-12 {
+  box-shadow: 0px 7px 8px -4px rgba(0,0,0,0.2), 0px 12px 17px 2px rgba(0,0,0,0.14), 0px 5px 22px 4px rgba(0,0,0,0.12) !important;
+}
+.elevation-15 {
+  box-shadow: 0px 8px 9px -5px rgba(0,0,0,0.2), 0px 15px 22px 2px rgba(0,0,0,0.14), 0px 6px 28px 5px rgba(0,0,0,0.12) !important;
+}
+.flex,
+.child-flex > * {
+  flex: 1 1 auto;
+  max-width: 100%;
+}
+#toolbar {
+  transition: none;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+  position: relative;
+  width: 100%;
+  will-change: padding-left, padding-right;
+}
+.toolbar__content {
+  align-items: center;
+  display: flex;
+  padding: 0 24px;
+}
+.toolbar__title {
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toolbar__title:not(:first-child) {
+  margin-left: 20px;
+}
+#footer {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    position:relative;
+    padding: 16px!important;
+    -webkit-box-flex: 0!important;
+    -ms-flex: 0 1 auto!important;
+    flex: 0 1 auto!important;
+    min-height: 36px;
+    -webkit-transition: .2s cubic-bezier(.4,0,.2,1);
+    transition: .2s cubic-bezier(.4,0,.2,1);
+}
+
+@media only screen and (min-width: 960px) {
+  .container {
+    max-width: 900px;
+  }
+}
+@media only screen and (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
+  }
+}
+@media only screen and (min-width: 1904px) {
+  .container {
+    max-width: 1785px;
+  }
+}
+@media only screen and (max-width: 959px) {
+  .container {
+    padding: 16px;
+  }
+}
+@media all and (min-width: 0) {
+  .flex.xs1 {
+    flex-basis: 8.333333333333332%;
+    flex-grow: 0;
+    max-width: 8.333333333333332%;
+  }
+  .flex.xs2 {
+    flex-basis: 16.666666666666664%;
+    flex-grow: 0;
+    max-width: 16.666666666666664%;
+  }
+  .flex.xs3 {
+    flex-basis: 25%;
+    flex-grow: 0;
+    max-width: 25%;
+  }
+  .flex.xs4 {
+    flex-basis: 33.33333333333333%;
+    flex-grow: 0;
+    max-width: 33.33333333333333%;
+  }
+  .flex.xs5 {
+    flex-basis: 41.66666666666667%;
+    flex-grow: 0;
+    max-width: 41.66666666666667%;
+  }
+  .flex.xs6 {
+    flex-basis: 50%;
+    flex-grow: 0;
+    max-width: 50%;
+  }
+  .flex.xs7 {
+    flex-basis: 58.333333333333336%;
+    flex-grow: 0;
+    max-width: 58.333333333333336%;
+  }
+  .flex.xs8 {
+    flex-basis: 66.66666666666666%;
+    flex-grow: 0;
+    max-width: 66.66666666666666%;
+  }
+  .flex.xs9 {
+    flex-basis: 75%;
+    flex-grow: 0;
+    max-width: 75%;
+  }
+  .flex.xs10 {
+    flex-basis: 83.33333333333334%;
+    flex-grow: 0;
+    max-width: 83.33333333333334%;
+  }
+  .flex.xs11 {
+    flex-basis: 91.66666666666666%;
+    flex-grow: 0;
+    max-width: 91.66666666666666%;
+  }
+  .flex.xs12 {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+@media all and (min-width: 600px) {
+  .flex.sm1 {
+    flex-basis: 8.333333333333332%;
+    flex-grow: 0;
+    max-width: 8.333333333333332%;
+  }
+  .flex.sm2 {
+    flex-basis: 16.666666666666664%;
+    flex-grow: 0;
+    max-width: 16.666666666666664%;
+  }
+  .flex.sm3 {
+    flex-basis: 25%;
+    flex-grow: 0;
+    max-width: 25%;
+  }
+  .flex.sm4 {
+    flex-basis: 33.33333333333333%;
+    flex-grow: 0;
+    max-width: 33.33333333333333%;
+  }
+  .flex.sm5 {
+    flex-basis: 41.66666666666667%;
+    flex-grow: 0;
+    max-width: 41.66666666666667%;
+  }
+  .flex.sm6 {
+    flex-basis: 50%;
+    flex-grow: 0;
+    max-width: 50%;
+  }
+  .flex.sm7 {
+    flex-basis: 58.333333333333336%;
+    flex-grow: 0;
+    max-width: 58.333333333333336%;
+  }
+  .flex.sm8 {
+    flex-basis: 66.66666666666666%;
+    flex-grow: 0;
+    max-width: 66.66666666666666%;
+  }
+  .flex.sm9 {
+    flex-basis: 75%;
+    flex-grow: 0;
+    max-width: 75%;
+  }
+  .flex.sm10 {
+    flex-basis: 83.33333333333334%;
+    flex-grow: 0;
+    max-width: 83.33333333333334%;
+  }
+  .flex.sm11 {
+    flex-basis: 91.66666666666666%;
+    flex-grow: 0;
+    max-width: 91.66666666666666%;
+  }
+  .flex.sm12 {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+@media all and (min-width: 960px) {
+  .flex.md1 {
+    flex-basis: 8.333333333333332%;
+    flex-grow: 0;
+    max-width: 8.333333333333332%;
+  }
+  .flex.md2 {
+    flex-basis: 16.666666666666664%;
+    flex-grow: 0;
+    max-width: 16.666666666666664%;
+  }
+  .flex.md3 {
+    flex-basis: 25%;
+    flex-grow: 0;
+    max-width: 25%;
+  }
+  .flex.md4 {
+    flex-basis: 33.33333333333333%;
+    flex-grow: 0;
+    max-width: 33.33333333333333%;
+  }
+  .flex.md5 {
+    flex-basis: 41.66666666666667%;
+    flex-grow: 0;
+    max-width: 41.66666666666667%;
+  }
+  .flex.md6 {
+    flex-basis: 50%;
+    flex-grow: 0;
+    max-width: 50%;
+  }
+  .flex.md7 {
+    flex-basis: 58.333333333333336%;
+    flex-grow: 0;
+    max-width: 58.333333333333336%;
+  }
+  .flex.md8 {
+    flex-basis: 66.66666666666666%;
+    flex-grow: 0;
+    max-width: 66.66666666666666%;
+  }
+  .flex.md9 {
+    flex-basis: 75%;
+    flex-grow: 0;
+    max-width: 75%;
+  }
+  .flex.md10 {
+    flex-basis: 83.33333333333334%;
+    flex-grow: 0;
+    max-width: 83.33333333333334%;
+  }
+  .flex.md11 {
+    flex-basis: 91.66666666666666%;
+    flex-grow: 0;
+    max-width: 91.66666666666666%;
+  }
+  .flex.md12 {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+@media all and (min-width: 1264px) {
+  .flex.lg1 {
+    flex-basis: 8.333333333333332%;
+    flex-grow: 0;
+    max-width: 8.333333333333332%;
+  }
+  .flex.lg2 {
+    flex-basis: 16.666666666666664%;
+    flex-grow: 0;
+    max-width: 16.666666666666664%;
+  }
+  .flex.lg3 {
+    flex-basis: 25%;
+    flex-grow: 0;
+    max-width: 25%;
+  }
+  .flex.lg4 {
+    flex-basis: 33.33333333333333%;
+    flex-grow: 0;
+    max-width: 33.33333333333333%;
+  }
+  .flex.lg5 {
+    flex-basis: 41.66666666666667%;
+    flex-grow: 0;
+    max-width: 41.66666666666667%;
+  }
+  .flex.lg6 {
+    flex-basis: 50%;
+    flex-grow: 0;
+    max-width: 50%;
+  }
+  .flex.lg7 {
+    flex-basis: 58.333333333333336%;
+    flex-grow: 0;
+    max-width: 58.333333333333336%;
+  }
+  .flex.lg8 {
+    flex-basis: 66.66666666666666%;
+    flex-grow: 0;
+    max-width: 66.66666666666666%;
+  }
+  .flex.lg9 {
+    flex-basis: 75%;
+    flex-grow: 0;
+    max-width: 75%;
+  }
+  .flex.lg10 {
+    flex-basis: 83.33333333333334%;
+    flex-grow: 0;
+    max-width: 83.33333333333334%;
+  }
+  .flex.lg11 {
+    flex-basis: 91.66666666666666%;
+    flex-grow: 0;
+    max-width: 91.66666666666666%;
+  }
+  .flex.lg12 {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+@media all and (min-width: 1904px) {
+  .flex.xl1 {
+    flex-basis: 8.333333333333332%;
+    flex-grow: 0;
+    max-width: 8.333333333333332%;
+  }
+  .flex.xl2 {
+    flex-basis: 16.666666666666664%;
+    flex-grow: 0;
+    max-width: 16.666666666666664%;
+  }
+  .flex.xl3 {
+    flex-basis: 25%;
+    flex-grow: 0;
+    max-width: 25%;
+  }
+  .flex.xl4 {
+    flex-basis: 33.33333333333333%;
+    flex-grow: 0;
+    max-width: 33.33333333333333%;
+  }
+  .flex.xl5 {
+    flex-basis: 41.66666666666667%;
+    flex-grow: 0;
+    max-width: 41.66666666666667%;
+  }
+  .flex.xl6 {
+    flex-basis: 50%;
+    flex-grow: 0;
+    max-width: 50%;
+  }
+  .flex.xl7 {
+    flex-basis: 58.333333333333336%;
+    flex-grow: 0;
+    max-width: 58.333333333333336%;
+  }
+  .flex.xl8 {
+    flex-basis: 66.66666666666666%;
+    flex-grow: 0;
+    max-width: 66.66666666666666%;
+  }
+  .flex.xl9 {
+    flex-basis: 75%;
+    flex-grow: 0;
+    max-width: 75%;
+  }
+  .flex.xl10 {
+    flex-basis: 83.33333333333334%;
+    flex-grow: 0;
+    max-width: 83.33333333333334%;
+  }
+  .flex.xl11 {
+    flex-basis: 91.66666666666666%;
+    flex-grow: 0;
+    max-width: 91.66666666666666%;
+  }
+  .flex.xl12 {
+    flex-basis: 100%;
+    flex-grow: 0;
+    max-width: 100%;
+  }
+}
+@media only screen and (max-width: 599px) {
+  .hidden-xs-only {
+    display: none !important;
+  }
+}
+.spacer {
+  flex-grow: 1 !important;
+}
+.hidden {
+    display: none;
+}
+/* Loading Spinner */
+.circle-chart__circle {
+  animation: circle-chart-fill 2s reverse; /* 1 */ 
+  transform: rotate(-90deg); /* 2, 3 */
+  transform-origin: center; /* 4 */
+}
+.circle-chart__info {
+  animation: circle-chart-appear 2s forwards;
+  opacity: 0;
+  transform: translateY(0.3em);
+}
+@keyframes circle-chart-fill {
+  to { stroke-dasharray: 0 100; }
+}
+@keyframes circle-chart-appear {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Snackbar / Toast */
+#snackbar {
+  visibility: hidden;
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 30px;
+  font-size: 17px;
+}
+#snackbar.show3000 {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+#snackbar.show5000 {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 4.5s;
+  animation: fadein 0.5s, fadeout 0.5s 4.5s;
+}
+#snackbar.show15000 {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 14.5s;
+  animation: fadein 0.5s, fadeout 0.5s 14.5s;
+}
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+}
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+}
+@-webkit-keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+@keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+/* Rounded switch - instead of checkbox */
+.switch {
+  position: relative;
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+  width: 60px;
+  height: 34px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #bbb;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.slider.round {
+  border-radius: 34px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+.custom-select {    
+    border: 2px solid #aaa;
+    border-radius: 6px;
+    padding: 5px;
+}
+input[type="color"] {
+    border: 2px solid #aaa;
+    border-radius: 6px;
+    margin-left: 4px;
+}
+/* color display */
+#color-display{
+  padding: 40px;
+  box-shadow: 0 0 8px #aaaaaa;
+  border-radius: 10px;
+}
+#color-display::before{
+  content: 'Move sliders to change Color or enter numbers between 0 to 255 in the number fields';
+  color: #ffffff;
+  text-shadow: 0 0 4px #333333;
+}
+/* labels */
+label{
+  padding: 8px;
+  width: 50px;
+  text-align: center;
+  color: #ffffff;
+  margin: 2px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 2px #333333;
+}
+input[type=number], label{
+  display: inline-block;
+}
+/* number input */
+.sliders input[type=number]{
+  text-align: center;
+  color: #111;
+  width: 60px;
+  padding: 6px 0 6px 10px;
+  background: transparent;
+  margin: 0 20px 0 4px;
+  outline: none;
+  border: 2px solid #aaaaaa;
+  border-radius: 6px;
+  transition: border 0.2s ease;
+  box-shadow: 0 0 2px #000000;
+}
+.sliders input[type=number]:focus{
+  border: 2px solid #508cfc;
+}
+/* color range sliders */
+.sliders input[type=range]{
+  height: 8px;
+  border-radius: 10px;
+  outline: none;
+  width: 100%;
+  box-shadow: 0 0 2px #444444, inset 0 0 2px #444444;
+}
+.sliders input[type=range], input[type=range]::-webkit-slider-thumb{
+  appearance: none;
+  -webkit-appearance: none;
+} 
+/* slider thumb */
+.sliders input[type=range]::-webkit-slider-thumb{
+  height: 20px;
+  width: 24px;
+  border-radius: 20%;
+  cursor: pointer;
+  background: #cccccc;
+  border: 2px solid #eeeeee;
+  box-shadow: 0 0 4px #444444, inset 0 0 2px #444444;
+}
+#bright, label[for=bright] {
+    background-color: #000;
+}
+#speed , label[for=speed] {
+    background-color: #000;
+}
+/* Color Wheel */
+#color_wheel_canvas {
+    user-select: none;
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -moz-user-select: none;
+}
+.color_wheel_legend {
+    width: 23%;
+    height: 46px;
+    color: #000;
+    display: inline-block;
+    overflow: hidden;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    margin-left: 0.5rem;
+    padding: 0.8rem;
+    text-align: center;
+    border: 1px solid #666;
+    border-radius: 6px;
+}
+        </style>
+    </head>
+    <body>
+        <div id="browser_warning" style="display:none">
+            <h1>warning</h1>
+            <p>microsoftIE</p>
+        </div>
+        <div id="modal">
+            <div class="modal-content">
+                <svg viewbox="0 0 33.83098862 33.83098862" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                    <circle stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />
+                    <circle id="percentage-done" class="circle-chart__circle" stroke="#00acc1" stroke-width="2" stroke-dasharray="10,100" stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />
+                    <g class="circle-chart__info">
+                        <text id="percentage" x="16.91549431" y="15.5" alignment-baseline="central" text-anchor="middle" font-size="8">10%</text>
+                        <text id="modal-content" x="16.91549431" y="20.5" alignment-baseline="central" text-anchor="middle" font-size="2"></text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div id="snackbar"></div>
+        <div id="container">
+            <nav id="toolbar" style="margin-top: 0px; padding-right: 0px; padding-left: 0px; transform: translateY(0px);">
+                <div class="toolbar__content" style="height:64px">
+                    <div class="toolbar__title">name</div>
+                    <div class="spacer"></div><div class="spacer"></div>
+                    <span id="connected" class="hidden"><i aria-hidden="true" class="material-icons">wifi</i>&nbsp;&nbsp;<span class="hidden-xs-only">title</span> <span>connected</span></span>
+                    <span id="disconnected"><i aria-hidden="true" class="material-icons">signal_wifi_off</i>&nbsp;&nbsp;<span class="hidden-xs-only">title</span> <span>disconnected</span></span>
+                    <span id="additional-con" class="hidden"></span>
+                    <span id="connection-failed" class="hidden"><button onClick="ws_reconnect()"><i class="material-icons">autorenew</i>&nbsp;<span>reconnect</span></button></span>
+                </div>
+            </nav>
+            <div class="layout row wrap">
+                <div class="flex xs12 sm5" style="max-width: 450px;">
+                    <div class="container" style="text-align: center;">
+                        <canvas id="color_wheel_canvas" onclick="onSelectColor(event)" ontouchmove="onSelectColor(event)"></canvas>
+                        <div id="colorSel1" class="color_wheel_legend elevation-9" onClick="onSelectColNum(1)">
+                            <span>color</span> 1: <span id="colorHex1"></span>
+                        </div>
+                        <div id="colorSel2" class="color_wheel_legend elevation-3" onClick="onSelectColNum(2)">
+                            <span>color</span> 2: <span id="colorHex2"></span>
+                        </div>
+                        <div id="colorSel3" class="color_wheel_legend elevation-3" onClick="onSelectColNum(3)">
+                            <span>color</span> 3: <span id="colorHex3"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex xs12 sm7">
+                    <div class="sliders container">
+                        <div class="color-wrap" style="display:none">
+                            <div id="color-display"></div>
+                        </div>
+                        <div>
+                            <label for="red">red</label>
+                            <input type="number" id="redNum">
+                            <input value="255" type="range" min="0" max="255" id="red">
+                        </div>
+                        <div>
+                            <label for="green">green</label>
+                            <input type="number" id="greenNum">
+                            <input value="255" type="range" min="0" max="255" id="green">
+                        </div>
+                        <div>
+                            <label for="blue">blue</label>
+                            <input type="number" id="blueNum">
+                            <input value="255" type="range" min="0" max="255" id="blue">
+                        </div>
+                        <div>
+                            <label for="bright" style="padding:8px 7px 3px 7px;"><i aria-hidden="true" class="material-icons md-light">wb_incandescent</i></label>
+                            <input type="number" id="brightNum">
+                            <input value="255" type="range" min="0" max="255" id="bright">
+                        </div>
+                        <div>
+                            <label for="speed" style="padding:8px 7px 3px 7px;"><i aria-hidden="true" class="material-icons">timer</i></label>
+                            <input type="number" id="speedNum">
+                            <input value="255" type="range" min="0" max="255" id="speed">
+                        </div>
+                        <div style="display:inline-flex;">
+                            <label class="switch">
+                                <input type="checkbox" id="autoplay" onclick="toggleAutoplay(this.checked);">
+                                <span class="slider round"></span>
+                            </label><div style="margin:auto 8px;font-size:18px;">autoplay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container" style="text-align: center;"><div id="modes" class="layout row wrap"></div></div>
+            
+            <div id="settings" class="container hidden" style="text-align: center;">
+                <div class="layout row wrap">
+                    <div class="flex xs12 sm6"><p>selectLanguage</p>
+                        <select id="language" class="custom-select"></select>
+                    </div>
+                    <div class="flex xs12 sm6"><p>selectPicker</p>
+                        <div style="display:inline-flex;">
+                            <div style="margin:auto 8px;font-size:18px;">wheel</div><label class="switch">
+                                <input type="checkbox" id="pickerstyle">
+                                <span class="slider round" style="background-color:#2196F3;"></span>
+                            </label><div  style="margin:auto 8px;font-size:18px;">circle</div>
+                        </div>
+                    </div>
+                    <div class="flex xs12" style="text-align: left; margin:20px 0;"><p>selectColors</p>
+                        <nobr>colorMain<input type="color" id="color-main" value="#ffffff">&nbsp;</nobr>
+                        <nobr>colorFont<input type="color" id="color-font" value="#ffffff">&nbsp;</nobr>
+                        <nobr>colorBack<input type="color" id="color-back" value="#ffffff">&nbsp;</nobr>
+                        <nobr>colorBtn<input type="color" id="color-btn" value="#ffffff">&nbsp;</nobr>
+                        <nobr>colorBtnSel<input type="color" id="color-btnsel" value="#ffffff"></nobr>
+                    </div>
+                    <div class="flex xs12">
+                        <div style="text-align:left;">
+                            <label aria-hidden="true" class="label" style="left: 0px; right: auto; width:100%;text-align: left;padding:0;">slaveNodes</label>
+                            <input type="text" id="slavenodes" style="border: 2px solid #aaaaaa; border-radius: 6px; width:100%; margin-bottom: 12px;" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex xs12"><button id="settings-save" type="button" class="elevation-6 btn btn--block"><div class="btn__content"><i aria-hidden="true" class="icon material-icons">save</i>saveSettings</div></button></div>
+            </div>
+            
+            <footer id="footer" style="height: 32px;">
+                <div><a href="https://github.com/toblum/McLighting/" id="footer-link" target="_blank">Project home</a> - © 2018</div> <div class="spacer"></div>
+                <button id="settings-open" type="button" class="btn btn--bottom"><div class="btn__content"><i aria-hidden="true" class="icon material-icons">settings</i></div></button>
+            </footer>
+        </div>
+        <script type="text/javascript">
+        if (navigator.userAgent.indexOf('MSIE')!==-1 || navigator.appVersion.indexOf('Trident/') > 0) {
+            console.log("IE detected");
+            document.getElementById("browser_warning").style.display = 'block';
+            document.getElementById("container").style.display = 'hide';
+        }
+        </script>
+        <script>
+/* Language definitions
+ * To add your own translation:
+ * Copy and translate the "en" (English) version, and translate it.
+ * If a translation is missing words, they will default to English.
+ */
+var language = {
+    en: {
+        lang_name: "English",
+        title: "McLighting",
+        name: "Mc Lighting UI",
+        connected: "connected",
+        disconnected: "disconnected",
+        reconnect: "Reconnect",
+        connectError1: "Could not connect to McLighting. Tried ",
+        connectError2: " times. Please use the RECONNECT button to try again.",
+        loadModes: "Loading modes ...", // This language-string is not translated (settings not loaded yet)
+        loadSettings: "Loading settings ...", // This language-string is not translated (settings not loaded yet)
+        loadWebsock: "Connecting websockets ...",
+        loadReady: "Ready ...",
+        loadError: "Error loading animation modes, please try again...", // This language-string is not translated (settings not loaded yet)
+        error: "Error",
+        warning: "Warning",
+        microsoftIE: "If you see this message, something went wrong. Please keep in mind that McLightingUI doesn't work in Internet Explorer. Please use an upt-to-date browser like Chrome, Firefox or Edge.",
+        color: "Color",
+        red: "Red",
+        green: "Green",
+        blue: "Blue",
+        not_greater: "cannot enter numbers greater than 255",
+        not_less: "cannot enter numbers less than 0",
+        autoplay: "Autoplay",
+        selectLanguage: "Select Language:",
+        selectColors: "Select interface colors:",
+        colorMain: "Main:",
+        colorFont: "Text:",
+        colorBack: "Background:",
+        colorBtn: "Buttons:",
+        colorBtnSel: "Selected Button:",
+        selectPicker: "Select color picker:",
+        circle: "Circle",
+        wheel: "Wheel",
+        slaveNodes: "Additional McLighting Slave Nodes (\";\" seperated)",
+        saveSettings: " Save Settings",
+        saved: "Settings saved",
+        savedError: "Error saving settings, please try again...",
+        projectHome: "Project home"
+    },
+    nl: {
+        lang_name: "Nederlands",
+        title: "McLighting",
+        name: "Mc Lighting UI",
+        connected: "verbonden",
+        disconnected: "niet verbonden",
+        reconnect: "Verbind opnieuw",
+        connectError1: "Kon niet verbinden met McLighting. ",
+        connectError2: " keer geprobeerd. Gebruik de Verbind opnieuw knop om opnieuw te proberen.",
+        loadModes: "Modes laden...", // This language-string is not translated (settings not loaded yet)
+        loadSettings: "Instellingen laden...", // This language-string is not translated (settings not loaded yet)
+        loadWebsock: "Websockets verbinden...",
+        loadReady: "Klaar...",
+        loadError: "Fout bij laden van animatie modes, probeer opnieuw...", // This language-string is not translated (settings not loaded yet)
+        error: "Fout",
+        warning: "Waarschuwing",
+        microsoftIE: "Als u dit bericht leest, ging er iets mis. McLightingUI werkt niet in Internet Explorer. Gebruik een fatsoenlijke browser zoals Chrome of Firefox.",
+        color: "Kleur",
+        red: "Rood",
+        green: "Groen",
+        blue: "Blauw",
+        not_greater: "Geen nummers hoger dan 255",
+        not_less: "Geen nummers lager dan 0",
+        autoplay: "Autoplay",
+        selectLanguage: "Selecteer Taal:",
+        selectColors: "Selecteer pagina kleuren:",
+        colorMain: "Algemeen:",
+        colorFont: "Tekst:",
+        colorBack: "Achtergrond:",
+        colorBtn: "Knoppen:",
+        colorBtnSel: "Geklikte Knop:",
+        selectPicker: "Selecteer Kleur kiezer:",
+        circle: "Cirkel",
+        wheel: "Wiel",
+        slaveNodes: "Additionele McLighting modules (\";\" gescheiden)",
+        saveSettings: " Instellingen opslaan",
+        saved: "Instellingen opgeslagen",
+        savedError: "Fout bij het opslaan, probeer opnieuw...",
+        projectHome: "Project pagina"
+    },
+    de: {
+        lang_name: "Deutsch",
+        title: "McLighting",
+        name: "Mc Lighting UI"
+    }
+};
+/*!
+ * reconnecting-websocket(-iife.min.js)
+ * https://github.com/pladaria/reconnecting-websocket
+ */
+var ReconnectingWebSocket=function(){"use strict";var e=function(t,n){return(e=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(e,t){e.__proto__=t}||function(e,t){for(var n in t)t.hasOwnProperty(n)&&(e[n]=t[n])})(t,n)};function t(t,n){function o(){this.constructor=t}e(t,n),t.prototype=null===n?Object.create(n):(o.prototype=n.prototype,new o)}var n=function(){return function(e,t){this.target=t,this.type=e}}(),o=function(e){function n(t,n){var o=e.call(this,"error",n)||this;return o.message=t.message,o.error=t,o}return t(n,e),n}(n),r=function(e){function n(t,n,o){void 0===t&&(t=1e3),void 0===n&&(n="");var r=e.call(this,"close",o)||this;return r.wasClean=!0,r.code=t,r.reason=n,r}return t(n,e),n}(n),i=function(){if("undefined"!=typeof WebSocket)return WebSocket},s={maxReconnectionDelay:1e4,minReconnectionDelay:1e3+4e3*Math.random(),minUptime:5e3,reconnectionDelayGrowFactor:1.3,connectionTimeout:4e3,maxRetries:1/0,debug:!1};return function(){function e(e,t,n){void 0===n&&(n={});var o=this;this._listeners={error:[],message:[],open:[],close:[]},this._retryCount=-1,this._shouldReconnect=!0,this._connectLock=!1,this._binaryType="blob",this._closeCalled=!1,this._messageQueue=[],this.onclose=void 0,this.onerror=void 0,this.onmessage=void 0,this.onopen=void 0,this._handleOpen=function(e){o._debug("open event");var t=o._options.minUptime,n=void 0===t?s.minUptime:t;clearTimeout(o._connectTimeout),o._uptimeTimeout=setTimeout(function(){return o._acceptOpen()},n),o._ws.binaryType=o._binaryType,o._messageQueue.forEach(function(e){return o._ws.send(e)}),o._messageQueue=[],o.onopen&&o.onopen(e),o._listeners.open.forEach(function(t){return o._callEventListener(e,t)})},this._handleMessage=function(e){o._debug("message event"),o.onmessage&&o.onmessage(e),o._listeners.message.forEach(function(t){return o._callEventListener(e,t)})},this._handleError=function(e){o._debug("error event",e.message),o._disconnect(void 0,"TIMEOUT"===e.message?"timeout":void 0),o.onerror&&o.onerror(e),o._debug("exec error listeners"),o._listeners.error.forEach(function(t){return o._callEventListener(e,t)}),o._connect()},this._handleClose=function(e){o._debug("close event"),o._clearTimeouts(),o._shouldReconnect&&o._connect(),o.onclose&&o.onclose(e),o._listeners.close.forEach(function(t){return o._callEventListener(e,t)})},this._url=e,this._protocols=t,this._options=n,this._connect()}return Object.defineProperty(e,"CONNECTING",{get:function(){return 0},enumerable:!0,configurable:!0}),Object.defineProperty(e,"OPEN",{get:function(){return 1},enumerable:!0,configurable:!0}),Object.defineProperty(e,"CLOSING",{get:function(){return 2},enumerable:!0,configurable:!0}),Object.defineProperty(e,"CLOSED",{get:function(){return 3},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"CONNECTING",{get:function(){return e.CONNECTING},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"OPEN",{get:function(){return e.OPEN},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"CLOSING",{get:function(){return e.CLOSING},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"CLOSED",{get:function(){return e.CLOSED},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"binaryType",{get:function(){return this._ws?this._ws.binaryType:this._binaryType},set:function(e){this._binaryType=e,this._ws&&(this._ws.binaryType=e)},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"retryCount",{get:function(){return Math.max(this._retryCount,0)},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"bufferedAmount",{get:function(){return this._messageQueue.reduce(function(e,t){return"string"==typeof t?e+=t.length:t instanceof Blob?e+=t.size:e+=t.byteLength,e},0)+(this._ws?this._ws.bufferedAmount:0)},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"extensions",{get:function(){return this._ws?this._ws.extensions:""},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"protocol",{get:function(){return this._ws?this._ws.protocol:""},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"readyState",{get:function(){return this._ws?this._ws.readyState:e.CONNECTING},enumerable:!0,configurable:!0}),Object.defineProperty(e.prototype,"url",{get:function(){return this._ws?this._ws.url:""},enumerable:!0,configurable:!0}),e.prototype.close=function(e,t){void 0===e&&(e=1e3),this._closeCalled=!0,this._shouldReconnect=!1,this._clearTimeouts(),this._ws?this._ws.readyState!==this.CLOSED?this._ws.close(e,t):this._debug("close: already closed"):this._debug("close enqueued: no ws instance")},e.prototype.reconnect=function(e,t){this._shouldReconnect=!0,this._closeCalled=!1,this._retryCount=-1,this._ws&&this._ws.readyState!==this.CLOSED?(this._disconnect(e,t),this._connect()):this._connect()},e.prototype.send=function(e){this._ws&&this._ws.readyState===this.OPEN?(this._debug("send",e),this._ws.send(e)):(this._debug("enqueue",e),this._messageQueue.push(e))},e.prototype.addEventListener=function(e,t){this._listeners[e]&&this._listeners[e].push(t)},e.prototype.removeEventListener=function(e,t){this._listeners[e]&&(this._listeners[e]=this._listeners[e].filter(function(e){return e!==t}))},e.prototype._debug=function(){for(var e=[],t=0;t<arguments.length;t++)e[t]=arguments[t];this._options.debug&&console.log.apply(console,["RWS>"].concat(e))},e.prototype._getNextDelay=function(){var e=this._options,t=e.reconnectionDelayGrowFactor,n=void 0===t?s.reconnectionDelayGrowFactor:t,o=e.minReconnectionDelay,r=void 0===o?s.minReconnectionDelay:o,i=e.maxReconnectionDelay,c=void 0===i?s.maxReconnectionDelay:i,u=r;return this._retryCount>0&&(u=r*Math.pow(n,this._retryCount-1))>c&&(u=c),this._debug("next delay",u),u},e.prototype._wait=function(){var e=this;return new Promise(function(t){setTimeout(t,e._getNextDelay())})},e.prototype._getNextUrl=function(e){if("string"==typeof e)return Promise.resolve(e);if("function"==typeof e){var t=e();if("string"==typeof t)return Promise.resolve(t);if(t.then)return t}throw Error("Invalid URL")},e.prototype._connect=function(){var e=this;if(!this._connectLock&&this._shouldReconnect){this._connectLock=!0;var t=this._options,n=t.maxRetries,o=void 0===n?s.maxRetries:n,r=t.connectionTimeout,c=void 0===r?s.connectionTimeout:r,u=t.WebSocket,a=void 0===u?i():u;if(this._retryCount>=o)this._debug("max retries reached",this._retryCount,">=",o);else{if(this._retryCount++,this._debug("connect",this._retryCount),this._removeListeners(),"function"!=typeof(h=a)||2!==h.CLOSING)throw Error("No valid WebSocket class provided");var h;this._wait().then(function(){return e._getNextUrl(e._url)}).then(function(t){e._closeCalled?e._connectLock=!1:(e._debug("connect",{url:t,protocols:e._protocols}),e._ws=e._protocols?new a(t,e._protocols):new a(t),e._ws.binaryType=e._binaryType,e._connectLock=!1,e._addListeners(),e._connectTimeout=setTimeout(function(){return e._handleTimeout()},c))})}}},e.prototype._handleTimeout=function(){this._debug("timeout event"),this._handleError(new o(Error("TIMEOUT"),this))},e.prototype._disconnect=function(e,t){if(void 0===e&&(e=1e3),this._clearTimeouts(),this._ws){this._removeListeners();try{this._ws.close(e,t),this._handleClose(new r(e,t,this))}catch(e){}}},e.prototype._acceptOpen=function(){this._debug("accept open"),this._retryCount=0},e.prototype._callEventListener=function(e,t){"handleEvent"in t?t.handleEvent(e):t(e)},e.prototype._removeListeners=function(){this._ws&&(this._debug("removeListeners"),this._ws.removeEventListener("open",this._handleOpen),this._ws.removeEventListener("close",this._handleClose),this._ws.removeEventListener("message",this._handleMessage),this._ws.removeEventListener("error",this._handleError))},e.prototype._addListeners=function(){this._ws&&(this._debug("addListeners"),this._ws.addEventListener("open",this._handleOpen),this._ws.addEventListener("close",this._handleClose),this._ws.addEventListener("message",this._handleMessage),this._ws.addEventListener("error",this._handleError))},e.prototype._clearTimeouts=function(){clearTimeout(this._connectTimeout),clearTimeout(this._uptimeTimeout)},e}()}();
+
+var host = window.location.hostname;
+if (host === "localhost" || host === "") {
+    host = "192.168.0.14";
+}
+const ws_url = "ws://" + host + ":81";
+
+var settings = {
+    color: {r:0, g:0, b:0, hex:"000000", r2:0, g2:0, b2:0, hex2:"000000", r3:0, g3:0, b3:0, hex3:"000000"},
+    brightness: 192,
+    speed: 192,
+    ws2812fx_mode: null,
+    lang: "en",
+    theme_font: "#FFFFFF",
+    theme_color: "#509000",
+    theme_back: "#333333",
+    theme_btn: "#509000",
+    theme_btnsel: "#DD2200",
+    visibility: [],
+    picker_type: "wheel",
+    slave_nodes: ""
+};
+var data = {
+    color_num: 1,
+    modes: [{ title: "Off", id: "off" }, { title: "TV", id: "tv" }],
+    connection: null,
+    additional_connections: [],
+    num_additional_connections: 0,
+    is_connected: false,
+    init: true
+};
+var sendIt; // Timer to prevent lots of sending
+/*!
+ * Vanilla Js RGB Color Sliders by Gologa Virobo
+*/
+// moduled querySelector
+function qs(selectEl){
+    return document.querySelector(selectEl);
+}
+
+// select RGB inputs
+let red = qs('#red'), green = qs('#green'), blue = qs('#blue'), bright = qs('#bright'), speed = qs('#speed'); 
+// selet num inputs
+let redNumVal = qs('#redNum'), greenNumVal = qs('#greenNum'), blueNumVal = qs('#blueNum'), brightNumVal = qs('#brightNum'), speedNumVal = qs('#speedNum');
+// select Color Display
+let colorDisplay = qs('#color-display');
+// select labels
+let redLbl = qs('label[for=red]'), greenLbl = qs('label[for=green]'), blueLbl = qs('label[for=blue]'), brightLbl = qs('label[for=bright]');
+
+// display colors
+function displayColors(all){
+    if (!all) {
+        document.getElementById("colorSel" + data.color_num).style.backgroundColor = `rgb(${red.value}, ${green.value}, ${blue.value})`;
+        document.getElementById("colorHex" + data.color_num).innerHTML = "#" + settings.color["hex" + ((data.color_num !== 1) ? data.color_num : "")];
+        // Send color
+        clearTimeout(sendIt);
+        sendIt = setTimeout(function() { set_color(); }, 500);
+    } else {
+        document.getElementById("colorSel1").style.backgroundColor = `rgb(${settings.color.r}, ${settings.color.g}, ${settings.color.b})`;
+        document.getElementById("colorHex1").innerHTML = "#" + settings.color.hex;
+        document.getElementById("colorSel2").style.backgroundColor = `rgb(${settings.color.r2}, ${settings.color.g2}, ${settings.color.b2})`;
+        document.getElementById("colorHex2").innerHTML = "#" + settings.color.hex2;
+        document.getElementById("colorSel3").style.backgroundColor = `rgb(${settings.color.r3}, ${settings.color.g3}, ${settings.color.b3})`;
+        document.getElementById("colorHex3").innerHTML = "#" + settings.color.hex3;
+    }
+}
+
+// initial color val numbers when DOM is loaded 
+function colorNumrVals(){
+    redNumVal.value = red.value;
+    greenNumVal.value = green.value;
+    blueNumVal.value = blue.value;
+    brightNumVal.value = bright.value;
+    speedNumVal.value = speed.value;
+}
+
+// initial colors when DOM is loaded
+function initSliderColors(){
+    // label bg colors
+    redLbl.style.background = `rgb(${red.value},0,0)`;
+    greenLbl.style.background = `rgb(0,${green.value},0)`;
+    blueLbl.style.background = `rgb(0,0,${blue.value})`;
+    brightLbl.style.background = `rgb(${bright.value},${bright.value},${bright.value})`;
+    var icon = brightLbl.childNodes[0];
+    if (bright.value >= 180) {
+        icon.className = icon.className.replace(/\bmd-light\b/g, "md-dark");
+    } else {
+        icon.className = icon.className.replace(/\bmd-dark\b/g, "md-light");
+    }
+
+    // slider bg colors
+    red.style.background = `rgb(${red.value},0,0)`;
+    green.style.background = `rgb(0,${green.value},0)`;
+    blue.style.background = `rgb(0,0,${blue.value})`;
+    bright.style.background = `rgb(${bright.value},${bright.value},${bright.value})`;
+}
+
+// change range values by number input
+function changeRangeNumVal(){
+    redNumVal.addEventListener('change', ()=>{
+        // make sure numbers are entered between 0 to 255
+        red.value = checkNumVal(redNumVal, red.value);
+        if (data.color_num === 1) settings.color.r = red.value;
+        if (data.color_num === 2) settings.color.r2 = red.value;
+        if (data.color_num === 3) settings.color.r3 = red.value;
+        initSliderColors();
+        displayColors();
+    });
+    greenNumVal.addEventListener('change', ()=>{
+        // make sure numbers are entered between 0 to 255
+        green.value = checkNumVal(greenNumVal, green.value);
+        if (data.color_num === 1) settings.color.g = green.value;
+        if (data.color_num === 2) settings.color.g2 = green.value;
+        if (data.color_num === 3) settings.color.g3 = green.value;
+        initSliderColors();
+        displayColors();
+    });
+    blueNumVal.addEventListener('change', ()=>{
+        // make sure numbers are entered between 0 to 255
+        blue.value = checkNumVal(blueNumVal, blue.value);
+        if (data.color_num === 1) settings.color.b = blue.value;
+        if (data.color_num === 2) settings.color.b2 = blue.value;
+        if (data.color_num === 3) settings.color.b3 = blue.value;
+        initSliderColors();
+        displayColors();
+    });
+
+    brightNumVal.addEventListener('change', ()=>{
+        // make sure numbers are entered between 0 to 255
+        bright.value = checkNumVal(brightNumVal, bright.value);
+        settings.brightness = bright.value;
+        initSliderColors();
+        // Send Brightness
+        clearTimeout(sendIt);
+        sendIt = setTimeout(function() { set_brightness(); }, 500);
+    });
+    speedNumVal.addEventListener('change', ()=>{
+        // make sure numbers are entered between 0 to 255
+        speed.value = checkNumVal(speedNumVal, speed.value);
+        settings.speed = speed.value;
+        // Send Speed
+        clearTimeout(sendIt);
+        sendIt = setTimeout(function() { set_speed(); }, 500);
+    });
+}
+function checkNumVal(numVal, curVal) {
+    if(numVal.value > 255) {
+        alert(language[settings.lang]["not_greater"]);
+        numVal.value = curVal;
+    } else if(numVal.value < 0) {
+        alert(language[settings.lang]["not_less"]);
+        numVal.value = curVal;
+    }
+    return numVal.value;
+}
+
+// Color Sliders controls
+function colorSliders(){
+    var event = new Event('change');
+    red.addEventListener('input', () => {
+        displayColors();
+        initSliderColors();
+        changeRangeNumVal();
+        colorNumrVals();
+        // Trigger onChange event to send value
+        redNumVal.dispatchEvent(event);
+    });
+
+    green.addEventListener('input', () => {
+        displayColors();
+        initSliderColors();
+        changeRangeNumVal();
+        colorNumrVals();
+        // Trigger onChange event to send value
+        greenNumVal.dispatchEvent(event);
+    });
+
+    blue.addEventListener('input', () => {
+        displayColors();
+        initSliderColors();
+        changeRangeNumVal();
+        colorNumrVals();
+        // Trigger onChange event to send value
+        blueNumVal.dispatchEvent(event);
+    });
+
+    bright.addEventListener('input', () => {
+        initSliderColors();
+        changeRangeNumVal();
+        colorNumrVals();
+        // Trigger onChange event to send value
+        brightNumVal.dispatchEvent(event);
+    });
+
+    speed.addEventListener('input', () => {
+        changeRangeNumVal();
+        colorNumrVals();
+        // Trigger onChange event to send value
+        speedNumVal.dispatchEvent(event);
+    });
+}
+
+/*!
+ * Implementation code
+ */
+
+function xhttp(url, post, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            content = this.responseText;
+            if (content !== '' && (content)) {
+                callback(content);
+            }
+        } else {
+            if (this.readyState === 4) callback("ERROR! Could not connect!");
+        }
+    };
+    if (post) xhr.open("POST", url, true);
+    else xhr.open("GET", url, true);
+    xhr.send(post);
+}
+function getModes() {
+    xhttp("http://" + host + "/get_modes", false, function(req) {
+        //console.log("Getting modes list via REST:", req);
+        if (req && req.substring(0,6) !== "ERROR!") {
+            modes = JSON.parse(req);
+            modes.forEach(item => {
+                if (item.name && item.name.length > 0) {
+                    data.modes.push({ title: item.name, id: item.mode });
+                }
+            });
+            //console.log("Got modes:", data.modes);
+            readSettings();
+        } else {
+            console.error(req);
+            document.getElementById("percentage").innerHTML = language.en.error;
+            showSnackbar(language.en.loadError, "error", 5000);
+        }
+    });
+}
+function showModes(mode, index) {
+    //console.log("Mode: " + mode.title + " - ID: " + mode.id + " - Hidden: " + mode.hidden);
+    var div = document.createElement("DIV");
+    var spn = document.createElement("SPAN");
+    var ico = document.createElement("I");
+    var btn = document.createElement("BUTTON");
+    var biv = document.createElement("DIV");
+    var txt = document.createTextNode(mode.title + " (" + mode.id + ")");
+    biv.appendChild(txt);
+    biv.className = "btn__content";
+    btn.appendChild(biv);
+    btn.type = "button";
+    btn.id = mode.id;
+    btn.onclick = function() { set_mode(mode.id, btn); };
+    btn.className = "elevation-6 btn";
+    btn.style.backgroundColor = settings.theme_btn;
+    ico.className = "icon icon--link material-icons";
+    ico.innerHTML = (mode.hidden === true) ? "check_box_outline_blank" : "check_box";
+    ico.onclick = function() { toggle(mode, this); };
+    spn.className = "hidden";
+    spn.appendChild(ico);
+    div.appendChild(spn);
+    div.appendChild(btn);
+    div.className = "flex xs12 sm6 md4 lg3 xl2" + ((mode.hidden === true) ? " hidden" : "");
+    document.getElementById("modes").appendChild(div);
+}
+function readSettings() {
+    document.getElementById("percentage").innerHTML = "33%";
+    document.getElementById("percentage-done").setAttribute("stroke-dasharray", "33,100");
+    document.getElementById("modal-content").innerHTML = language.en.loadSettings;
+    xhttp("http://" + host + "/uistate.json", false, function(req) {
+        //console.log("readSettings()", req);
+        if (req && req.substring(0,6) !== "ERROR!") {
+            tmpsettings = JSON.parse(req);
+            // Replace default settings with saved ones
+            for (var set in settings) {
+                if (!settings.hasOwnProperty(set)) continue;
+                if (typeof(tmpsettings[set]) !== "undefined") settings[set] = tmpsettings[set];
+            }
+            applySettings();
+            connectAdditionalNodes();
+            ws_connect();
+        } else {
+            console.warn("ERROR loading settings", req);
+            ws_connect();
+        }
+    });
+}
+function applySettings() {
+    // Make sure language contains all the words from English translation.
+    if (settings.lang !== "en") {
+        for (var word in language.en) {
+            if (!language.en.hasOwnProperty(word)) continue;
+            //console.log(word);
+            if (typeof(language[settings.lang][word]) === "undefined") language[settings.lang][word] = language.en[word];
+        }
+    }
+    translate(document.body);
+    document.title = language[settings.lang].title;
+
+    data.modes.forEach(mode => {
+        mode.hidden = false;
+        if (settings.visibility.indexOf(mode.id) > -1) {
+            mode.hidden = true;
+            //this.$set(this.modes, index, mode);
+        }
+        showModes(mode);
+    });
+    //console.log(data.modes);
+}
+function saveSettings() {
+    var formData = new FormData();
+    var blob = new Blob([JSON.stringify(settings)], {type: 'application/json'});
+    formData.append('settings', blob, '/uistate.json');
+
+    //console.log("Sending: ", formData);
+    xhttp("http://" + host + "/edit", formData, function(req) {
+        if (req && req.substring(0,6) !== "ERROR!") {
+            console.log("SUCCESS saveSettings()", req, settings);
+            showSnackbar(language[settings.lang].saved, "success", 3000);
+            connectAdditionalNodes();
+            data.edit_mode = false;
+        } else {
+            console.error("ERROR saveSettings()", req);
+            showSnackbar(language[settings.lang].savedError, "error", 5000);
+        }
+    });
+}
+function toggle(mode, el) {
+    mode.hidden = !mode.hidden;
+    el.innerHTML = (mode.hidden) ? "check_box_outline_blank" : "check_box";
+    var pos = settings.visibility.indexOf(mode.id);
+    if (!mode.hidden && pos > -1) {
+        settings.visibility.splice(pos, 1);
+    } else if (mode.hidden && pos === -1) {
+        settings.visibility.push(mode.id);
+    }
+    //console.log("Hidden items: " + settings.visibility);
+}
+function toggleAutoplay(mode) {
+    var message = (mode) ? "start" : "stop";
+    ws_send(message);
+    if (!mode) {
+        document.getElementById("autoplay").checked = false;
+        ws_send("$");
+    }
+};
+
+function onSelectColNum(colnum) {
+    data.color_num = colnum;
+    console.log("selected color:" + colnum);
+    // Show selected color number
+    var x = document.getElementsByClassName("color_wheel_legend");
+    for (var i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(/\belevation-9\b/g, "elevation-3");
+    }
+    x = document.getElementById("colorSel" + colnum);
+    x.className = x.className.replace(/\belevation-3\b/g, "elevation-9");
+    // Set ColorPicker and Sliders to selected color
+    red.value = settings.color["r" + (colnum > 1 ? colnum : "")];
+    green.value = settings.color["g" + (colnum > 1 ? colnum : "")];
+    blue.value = settings.color["b" + (colnum > 1 ? colnum : "")];
+    initSliderColors();
+    changeRangeNumVal();
+    colorNumrVals();
+}
+function initSettings() {
+    // Add languages to language select
+    var lang = document.getElementById("language");
+    for (var code in language) {
+        if (!language.hasOwnProperty(code)) continue;
+        var option = document.createElement("OPTION");
+        option.setAttribute("value", code);
+        option.innerHTML = language[code].lang_name;
+        lang.appendChild(option);
+    }
+    lang.value = settings.lang;
+    lang.addEventListener('change', ()=>{
+        settings.lang = lang.options[lang.selectedIndex].value;
+    });
+    var picker = document.getElementById("pickerstyle");
+    picker.checked = (settings.picker_type === "circle");
+    redrawColorPicker(); // Redraw colorpicker to saved settings
+    picker.addEventListener('change', ()=>{
+        settings.picker_type = (picker.checked) ? "circle" : "wheel";
+        redrawColorPicker();
+    });
+    var colmain = document.getElementById("color-main");
+    colmain.value = settings.theme_color;
+    colmain.addEventListener('change', ()=>{
+        settings.theme_color = colmain.value;
+        document.getElementById("toolbar").style.backgroundColor = settings.theme_color;
+        document.getElementById("footer").style.backgroundColor = settings.theme_color;
+    });
+    var colfont = document.getElementById("color-font")
+    colfont.value = settings.theme_font;
+    colfont.addEventListener('change', ()=>{
+        settings.theme_font = colfont.value;
+        document.getElementById("footer-link").style.color = settings.theme_font;
+        document.getElementById("container").style.color = settings.theme_font;
+    });
+    var colback = document.getElementById("color-back");
+    colback.value = settings.theme_back;
+    colback.addEventListener('change', ()=>{
+        settings.theme_back = colback.value;
+        document.getElementById("container").style.backgroundColor = settings.theme_back;
+        // Set text/icon color depending on background darkness
+        var hexcolor = settings.theme_back;
+        var yiq = ((parseInt(hexcolor.substr(0,2),16)*299)+(parseInt(hexcolor.substr(2,2),16)*587)+(parseInt(hexcolor.substr(4,2),16)*114))/1000;
+        var icons = document.getElementsByClassName("icon--link");
+        for (var i = 0; i < icons.length; i++) {
+            icons[i].style.color = (yiq >= 125) ? '#222' : '#EEE';
+        }
+        document.getElementById("redNum").style.color = (yiq >= 125) ? '#111' : '#EEE';
+        document.getElementById("greenNum").style.color = (yiq >= 125) ? '#111' : '#EEE';
+        document.getElementById("blueNum").style.color = (yiq >= 125) ? '#111' : '#EEE';
+        document.getElementById("brightNum").style.color = (yiq >= 125) ? '#111' : '#EEE';
+        document.getElementById("speedNum").style.color = (yiq >= 125) ? '#111' : '#EEE';
+        document.getElementById("settings").style.color = (yiq >= 125) ? '#111' : '#EEE';
+    });
+    var colbtn = document.getElementById("color-btn");
+    colbtn.value = settings.theme_btn;
+    colbtn.addEventListener('change', ()=>{
+        settings.theme_btn = colbtn.value;
+        btns = document.getElementsByClassName("btn");
+        for (i = 0; i < btns.length; i++) {
+            btns[i].style.backgroundColor = settings.theme_btn;
+        }
+        document.getElementById(settings.ws2812fx_mode).style.backgroundColor = settings.theme_btnsel;
+    });
+    var colbtns = document.getElementById("color-btnsel");
+    colbtns.value = settings.theme_btnsel;
+    colbtns.addEventListener('change', ()=>{
+        settings.theme_btnsel = colbtns.value;
+        document.getElementById(settings.ws2812fx_mode).style.backgroundColor = settings.theme_btnsel;
+    });
+    // Set interface colors
+    var event = new Event('change');
+    colmain.dispatchEvent(event);
+    colfont.dispatchEvent(event);
+    colback.dispatchEvent(event);
+    colbtn.dispatchEvent(event);
+    colbtns.dispatchEvent(event);
+
+    document.getElementById("settings-open").addEventListener('click', ()=>{
+        var icons = document.getElementsByClassName("icon--link");
+        var set = document.getElementById("settings");
+        var arr = set.className.split(" ");
+        if (arr.indexOf("hidden") === -1) {
+            set.className += " hidden";
+            // hide checkboxes and disabled buttons
+            data.modes.map(mode => {
+                if (mode.hidden) {
+                    document.getElementById(mode.id).parentNode.className += " hidden";
+                }
+            });
+            for (var i = 0; i < icons.length; i++) {
+                icons[i].parentNode.className += " hidden";
+            }
+        } else {
+            set.className = set.className.replace(/\bhidden\b/g, "");
+            // show checkboxes and all buttons
+            data.modes.map(mode => {
+                if (mode.hidden) {
+                    var parent = document.getElementById(mode.id).parentNode;
+                    parent.className = parent.className.replace(/\bhidden\b/g, "");
+                }
+            });
+            for (var i = 0; i < icons.length; i++) {
+                icons[i].parentNode.className = icons[i].parentNode.className.replace(/\bhidden\b/g, "");
+            }
+        }
+    });
+    document.getElementById("settings-save").addEventListener('click', ()=>{
+        settings.slave_nodes = document.getElementById("slavenodes").value;
+        saveSettings();
+        var icons = document.getElementsByClassName("icon--link");
+        for (var i = 0; i < icons.length; i++) {
+            icons[i].parentNode.className += " hidden";
+        }
+        document.getElementById("settings").className += " hidden";
+    });
+}
+
+function showSnackbar(msg, why, time) {
+    var x = document.getElementById("snackbar");
+    x.innerHTML = msg;
+    x.style.backgroundColor = (why === "error") ? "#ad2727" : "#4caf50";
+    // Animation is timed with classname (3000, 5000 or 15000)
+    x.className = "show" + time;
+    setTimeout(function(){ x.className = x.className.replace("show" + time, ""); }, time);
+}
+
+/* WebSocket code */
+let ws_options = {
+    connectionTimeout: 1000,
+    maxRetries: 2,
+    reconnectionDelayGrowFactor: 2,
+    debug: true
+};
+function disconnectAllAdditionalNodes() {
+    // Close potentially open connections
+    data.additional_connections.forEach((conn) => {
+        conn.close(1000, "Manually closed::disconnectAllAdditionalNode()", {keepClosed: true});
+    });
+    data.additional_connections = [];
+    data.num_additional_connections = 0;
+    var con = document.getElementById("additional-con");
+    var arr = con.className.split(" ");
+    if (arr.indexOf("hidden") === -1) {
+        con.className += " hidden";
+    }
+}
+function connectAdditionalNodes() {
+    disconnectAllAdditionalNodes();
+
+    // Connect to the configured nodes
+    let nodes = settings.slave_nodes.split(";");
+    nodes.forEach((host) => {
+        host = host.trim();
+        if (host !== "") {
+            let conn = new ReconnectingWebSocket(ws_url, "arduino", ws_options);
+            console.log("Connecting to additional node", host);
+            data.additional_connections.push(conn);
+  
+            conn.onopen = () => {
+                console.log("Connected to additional node", host);
+                data.num_additional_connections++;
+                var con = document.getElementById("additional-con");
+                con.className = con.className.replace(/\bhidden\b/g, "");
+                con.innerHTML = "+" + num_additional_connections;
+            };
+            conn.onclose = () => {
+                console.log("Disconnected to additional node", host);
+                data.num_additional_connections--;
+                var con = document.getElementById("additional-con");
+                con.innerHTML = "+" + num_additional_connections;
+                if (data.num_additional_connections <= 1) {
+                    var arr = con.className.split(" ");
+                    if (arr.indexOf("hidden") === -1) {
+                        con.className += " hidden";
+                    }
+                }
+            };
+            conn.onerror = () => {
+                console.log("Error on additional node", host);
+            };
+        }
+    });
+}
+function ws_reconnect() {
+    data.connection.reconnect();
+    var con = document.getElementById("connection-failed");
+    var arr = con.className.split(" ");
+    if (arr.indexOf("hidden") === -1) {
+        con.className += " hidden";
+    }
+}
+
+function ws_connect() {
+    data.connection = new ReconnectingWebSocket(ws_url, "arduino", ws_options);
+    document.getElementById("percentage").innerHTML = "67%";
+    document.getElementById("percentage-done").setAttribute("stroke-dasharray", "67,100");
+    document.getElementById("modal-content").innerHTML = language[settings.lang].loadWebsock;
+
+    // When the connection is open, send some data to the server
+    data.connection.onopen = function() {
+        console.log("WebSocket open");
+        data.is_connected = true;
+        var con = document.getElementById("disconnected");
+        var arr = con.className.split(" ");
+        if (arr.indexOf("hidden") === -1) {
+            con.className += " hidden";
+        }
+        con = document.getElementById("connected");
+        con.className = con.className.replace(/\bhidden\b/g, "");
+        document.getElementById("percentage").innerHTML = "100%";
+        document.getElementById("percentage-done").setAttribute("stroke-dasharray", "100,100");
+        document.getElementById("modal-content").innerHTML = language[settings.lang].loadReady;
+        ws_send("$");
+    };
+
+    // When the connection is open, send some data to the server
+    data.connection.onclose = function() {
+        console.log("WebSocket closed");
+        data.is_connected = false;
+    };
+
+    // Log errors
+    data.connection.onerror = function(error) {
+        console.error("WebSocket error", error);
+        data.is_connected = false;
+
+        if (data.connection.retryCount >= ws_options.maxRetries) {
+            var con = document.getElementById("connection-failed");
+            con.className = con.className.replace(/\bhidden\b/g, "");
+            showSnackbar(connectError1 + ws_options.maxRetries + connectError2, "error", 15000);
+        }
+    };
+
+    // Log messages from the server
+    data.connection.onmessage = function(e) {
+        console.log("WebSocket from server:", e.data);
+        try {
+            var res = JSON.parse(e.data);
+            // console.log("res", res);
+            if (res && res.ws2812fx_mode) {
+                settings.ws2812fx_mode = res.ws2812fx_mode;
+            }
+            if (res && res.speed) {
+                settings.speed = res.speed;
+                // init ColorSliderVals
+                speed.value = res.speed;
+            }
+            if (res && res.brightness) {
+                settings.brightness = res.brightness;
+                // init ColorSliderVals
+                bright.value = res.brightness;
+            }
+            if (res && res.color) {
+                settings.color.r = res.color[0];
+                settings.color.g = res.color[1];
+                settings.color.b = res.color[2];
+                settings.color.hex = rgbToHex([res.color[0], res.color[1], res.color[2]]);
+                settings.color.r2 = res.color[3];
+                settings.color.g2 = res.color[4];
+                settings.color.b2 = res.color[5];
+                settings.color.hex2 = rgbToHex([res.color[3], res.color[4], res.color[5]]);
+                settings.color.r3 = res.color[6];
+                settings.color.g3 = res.color[7];
+                settings.color.b3 = res.color[8];
+                settings.color.hex3 = rgbToHex([res.color[6], res.color[7], res.color[8]]);
+                // init ColorSliderVals
+                red.value = settings.color.r;
+                green.value = settings.color.g;
+                blue.value = settings.color.b;
+            }
+            if (data.init === true) {
+                // Set selected mode button
+                document.getElementById(settings.ws2812fx_mode).style.backgroundColor = settings.theme_btnsel;
+                // Close Loading Modal
+                setTimeout(() => {
+                    document.getElementById('modal').style.display = "none";
+                }, 500);
+                // init Color Vals
+                colorNumrVals();
+                initSliderColors();
+                // init Change Range Val
+                changeRangeNumVal();
+                // init Colors controls
+                colorSliders();
+                // init display Colors
+                displayColors(true);
+                initSettings();
+                data.init = false;
+            }
+        } catch (e) {}
+    };
+}
+
+function ws_send(message) {
+    console.log("WS send: ", message);
+    data.connection.send(message);
+
+    data.additional_connections.forEach((conn) => {
+        conn.send(message);
+    });
+}
+
+function set_mode(mode_id, el) {
+    toggleAutoplay(false);
+    btns = document.getElementsByClassName("btn");
+    for (i = 0; i < btns.length; i++) {
+        btns[i].style.backgroundColor = settings.theme_btn;
+    }
+    el.style.backgroundColor = settings.theme_btnsel;
+    settings.ws2812fx_mode = mode_id;
+    if (Number.isInteger(mode_id)) {
+        ws_send("/" + mode_id);
+    } else {
+        // For named modes
+        ws_send("=" + mode_id);
+    }
+}
+function set_speed() {
+    ws_send("?" + settings.speed);
+}
+function set_brightness() {
+    ws_send("%" + settings.brightness);
+}
+function set_color() {
+    if (data.color_num === 1) {
+        ws_send("#" + rgbToHex([settings.color.r, settings.color.g, settings.color.b]));
+    }
+    if (data.color_num === 2) {
+        ws_send("##" + rgbToHex([settings.color.r2, settings.color.g2, settings.color.b2]));
+    }
+    if (data.color_num === 3) {
+        ws_send("###" + rgbToHex([settings.color.r3, settings.color.g3, settings.color.b3]));
+    }
+}    
+
+/* ColorPicker Code */
+var canvas = document.getElementById('color_wheel_canvas');
+var context = canvas.getContext('2d');
+
+function componentToHex(c) {
+    return ("0" + Number(c).toString(16)).slice(-2).toUpperCase();
+}
+
+function rgbToHex(rgb) {
+    return (componentToHex(rgb[0]) + componentToHex(rgb[1]) + componentToHex(rgb[2]));
+}
+
+function onSelectColor(event) {
+    var pos;
+    event.preventDefault();
+
+    if (event.type === "touchmove") {
+        var el = event.target;
+        pos = {
+            x: Math.round(event.targetTouches[0].pageX - el.offsetLeft),
+            y: Math.round(event.targetTouches[0].pageY - el.offsetTop)
+        };
+    }
+    if (event.type === "click") {
+        pos = {
+            x: Math.round(event.offsetX),
+            y: Math.round(event.offsetY)
+        };
+    }
+
+    var color = context.getImageData(pos.x, pos.y, 1, 1).data;
+    var hex_color = rgbToHex(color);
+    var colnum = (data.color_num === 1) ? "" : data.color_num;
+    settings.color["hex" + colnum] = hex_color;
+    settings.color["r" + colnum] = color[0];
+    settings.color["g" + colnum] = color[1];
+    settings.color["b" + colnum] = color[2];
+    red.value = color[0];
+    green.value = color[1];
+    blue.value = color[2];
+    displayColors();
+    initSliderColors();
+    changeRangeNumVal();
+    colorNumrVals();
+}
+
+function redrawColorPicker() {
+    if (context) {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    if (settings.picker_type === "circle") {
+        drawCircle();
+    } else {
+        drawWheel();
+    }
+}
+
+    /**
+     * Draws color ring
+     */
+function drawWheel() {
+    var centerX = canvas.width / 2;
+    var centerY = canvas.height / 2;
+    // console.log(centerX, centerY, canvas.width, canvas.height);
+    var innerRadius = canvas.width / 4.5;
+    var outerRadius = (canvas.width - 10) / 2;
+    // outer border
+    context.beginPath();
+    // outer circle
+    context.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI, false);
+    // draw the outer border: (gets drawn around the circle!)
+    context.lineWidth = 4;
+    context.strokeStyle = "#000000";
+    context.stroke();
+    context.closePath();
+
+    // fill with beautiful colors
+    // taken from here: http://stackoverflow.com/questions/18265804/building-a-color-wheel-in-html5
+    for (var angle = 0; angle <= 360; angle += 1) {
+        var startAngle = (angle - 2) * Math.PI / 180;
+        var endAngle = angle * Math.PI / 180;
+        context.beginPath();
+        context.moveTo(centerX, centerY);
+        context.arc(
+            centerX,
+            centerY,
+            outerRadius,
+            startAngle,
+            endAngle,
+            false
+        );
+        context.closePath();
+        context.fillStyle = "hsl(" + angle + ", 100%, 50%)";
+        context.fill();
+        context.closePath();
+    }
+
+    // inner border
+    context.beginPath();
+    // this.context.arc(centerX, centerY, radius, startAngle, endAngle, counterClockwise);
+    context.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI, false);
+    // fill the center
+    var my_gradient = context.createLinearGradient(0, 0, 170, 0);
+    my_gradient.addColorStop(0, "black");
+    my_gradient.addColorStop(1, "white");
+
+    context.fillStyle = my_gradient;
+    context.fillStyle = "white";
+    context.fill();
+
+    // draw the inner line
+    context.lineWidth = 2;
+    context.strokeStyle = "#000000";
+    context.stroke();
+    context.closePath();
+}
+
+    /**
+     * Draws color circle
+     */
+function drawCircle() {
+    let radius = canvas.width / 2;
+    let image = context.createImageData(2 * radius, 2 * radius);
+    let data = image.data;
+
+    for (let x = -radius; x < radius; x++) {
+        for (let y = -radius; y < radius; y++) {
+            let [r, phi] = xy2polar(x, y);
+
+            if (r > radius) {
+                // skip all (x,y) coordinates that are outside of the circle
+                continue;
+            }
+
+            let deg = rad2deg(phi);
+
+            // Figure out the starting index of this pixel in the image data array.
+            let rowLength = 2 * radius;
+            let adjustedX = x + radius; // convert x from [-50, 50] to [0, 100] (the coordinates of the image data array)
+            let adjustedY = y + radius; // convert y from [-50, 50] to [0, 100] (the coordinates of the image data array)
+            let pixelWidth = 4; // each pixel requires 4 slots in the data array
+            let index = (adjustedX + (adjustedY * rowLength)) * pixelWidth;
+
+            let hue = deg;
+            let saturation = r / radius;
+            let value = 1.0;
+
+            let [red, green, blue] = hsv2rgb(hue, saturation, value);
+            let alpha = 255;
+
+            data[index] = red;
+            data[index + 1] = green;
+            data[index + 2] = blue;
+            data[index + 3] = alpha;
+        }
+    }
+    this.context.putImageData(image, 0, 0);
+}
+function xy2polar(x, y) {
+    let r = Math.sqrt(x * x + y * y);
+    let phi = Math.atan2(y, x);
+    return [r, phi];
+}
+function rad2deg(rad) {
+    // rad in [-π, π] range
+    // return degree in [0, 360] range
+    return ((rad + Math.PI) / (2 * Math.PI)) * 360;
+}
+function hsv2rgb(hue, saturation, value) {
+    let chroma = value * saturation;
+    let hue1 = hue / 60;
+    let x = chroma * (1 - Math.abs((hue1 % 2) - 1));
+    let r1, g1, b1;
+
+    if (hue1 >= 0 && hue1 <= 1) {
+        ([r1, g1, b1] = [chroma, x, 0]);
+    } else if (hue1 >= 1 && hue1 <= 2) {
+        ([r1, g1, b1] = [x, chroma, 0]);
+    } else if (hue1 >= 2 && hue1 <= 3) {
+        ([r1, g1, b1] = [0, chroma, x]);
+    } else if (hue1 >= 3 && hue1 <= 4) {
+        ([r1, g1, b1] = [0, x, chroma]);
+    } else if (hue1 >= 4 && hue1 <= 5) {
+        ([r1, g1, b1] = [x, 0, chroma]);
+    } else if (hue1 >= 5 && hue1 <= 6) {
+        ([r1, g1, b1] = [chroma, 0, x]);
+    }
+
+    let m = value - chroma;
+    let [r, g, b] = [r1 + m, g1 + m, b1 + m];
+
+    // Change r,g,b values from [0,1] to [0,255]
+    return [255 * r, 255 * g, 255 * b];
+}
+
+function translate(node) {
+    if (node.nodeType === 3 && node.data in language.en) {
+        node.data = language[settings.lang][node.data];
+    }
+    if (node.nodeType === 1 && node.nodeName !== "SCRIPT") {
+        for (var i = 0; i < node.childNodes.length; i++) {
+            translate(node.childNodes[i]);
+        }
+    }
+}
+document.addEventListener("DOMContentLoaded", function(event) {
+    // Code to run since DOM is loaded and ready
+    document.getElementById("modal-content").innerHTML = language.en.loadModes;
+    getModes();
+
+    canvas.width = 400;
+    canvas.height = 400;
+
+    redrawColorPicker();
+});
+        </script>
+    </body>
+</html>
