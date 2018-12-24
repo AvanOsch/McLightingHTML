@@ -1285,6 +1285,8 @@ function xhttp(url, post, callback) {
             content = this.responseText;
             if (content !== '' && (content)) {
                 callback(content);
+            } else {
+                callback("Success!");
             }
         } else {
             if (this.readyState === 4) callback("ERROR! Could not connect!");
