@@ -904,7 +904,7 @@ input[type=number], label{
                             <input type="number" id="speedNum">
                             <input value="255" type="range" min="0" max="255" id="speed">
                         </div>
-                        <div style="display:inline-flex;">
+                        <div style="display:inline-flex; margin-top:12px;">
                             <label class="switch">
                                 <input type="checkbox" id="autoplay" onclick="toggleAutoplay(this.checked);">
                                 <span class="slider round"></span>
@@ -929,6 +929,19 @@ input[type=number], label{
                             </label><div  style="margin:auto 8px;font-size:18px;">circle</div>
                         </div>
                     </div>
+                </div>
+                <div class="layout row wrap" style="margin-top:12px;">
+                    <div class="flex xs12 sm6"></div>
+                    <div class="flex xs12 sm6"><p>showAutoplay</p>
+                        <div style="display:inline-flex;">
+                            <label class="switch">
+                                <input type="checkbox" id="set-autoplay">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="layout row wrap">
                     <div class="flex xs12" style="text-align: left; margin:20px 0;"><p>selectColors</p>
                         <nobr>colorMain<input type="color" id="color-main" value="#ffffff">&nbsp;</nobr>
                         <nobr>colorFont<input type="color" id="color-font" value="#ffffff">&nbsp;</nobr>
@@ -999,6 +1012,7 @@ var language = {
         selectPicker: "Select color picker:",
         circle: "Circle",
         wheel: "Wheel",
+        showAutoplay: "Show Autoplay:",
         slaveNodes: "Additional McLighting Slave Nodes (\";\" seperated)",
         saveSettings: " Save Settings",
         saved: "Settings saved",
@@ -1039,6 +1053,7 @@ var language = {
         selectPicker: "Selecteer Kleur kiezer:",
         circle: "Cirkel",
         wheel: "Wiel",
+        showAutoplay: "Autoplay tonen:",
         slaveNodes: "Additionele McLighting modules (\";\" gescheiden)",
         saveSettings: " Instellingen opslaan",
         saved: "Instellingen opgeslagen",
@@ -1076,6 +1091,7 @@ var settings = {
     theme_btnsel: "#DD2200",
     visibility: [],
     picker_type: "wheel",
+    autoplay: true,
     slave_nodes: ""
 };
 var data = {
@@ -1106,10 +1122,10 @@ let colorDisplay = qs('#color-display');
 let redLbl = qs('label[for=red]'), greenLbl = qs('label[for=green]'), blueLbl = qs('label[for=blue]'), brightLbl = qs('label[for=bright]');
 
 // display colors
-function displayColors(all){
+function displayColors(all = false) {
     if (!all) {
         document.getElementById("colorSel" + data.color_num).style.backgroundColor = `rgb(${red.value}, ${green.value}, ${blue.value})`;
-        document.getElementById("colorHex" + data.color_num).innerHTML = "#" + settings.color["hex" + ((data.color_num !== 1) ? data.color_num : "")];
+        document.getElementById("colorHex" + data.color_num).innerHTML = "#" + rgbToHex([red.value, green.value, blue.value]);
         // Send color
         clearTimeout(sendIt);
         sendIt = setTimeout(function() { set_color(); }, 500);
@@ -1329,20 +1345,16 @@ function readSettings() {
     document.getElementById("modal-content").innerHTML = language.en.loadSettings;
     xhttp("http://" + host + "/uistate.json", false, function(req) {
         //console.log("readSettings()", req);
-        if (req && req.substring(0,6) !== "ERROR!") {
-            tmpsettings = JSON.parse(req);
-            // Replace default settings with saved ones
-            for (var set in settings) {
-                if (!settings.hasOwnProperty(set)) continue;
-                if (typeof(tmpsettings[set]) !== "undefined") settings[set] = tmpsettings[set];
-            }
-            applySettings();
-            connectAdditionalNodes();
-            ws_connect();
-        } else {
-            console.warn("ERROR loading settings", req);
-            ws_connect();
+        tmpsettings = (req && req.substring(0,6) !== "ERROR!") ? JSON.parse(req) : {};
+        // Replace default settings with saved ones
+        for (var set in settings) {
+            if (!settings.hasOwnProperty(set)) continue;
+            if (typeof(tmpsettings[set]) !== "undefined") settings[set] = tmpsettings[set];
         }
+        applySettings();
+        if (req && req.substring(0,6) !== "ERROR!") connectAdditionalNodes();
+        else console.warn("ERROR loading settings", req);
+        ws_connect();
     });
 }
 function applySettings() {
@@ -1444,6 +1456,15 @@ function initSettings() {
         settings.picker_type = (picker.checked) ? "circle" : "wheel";
         redrawColorPicker();
     });
+    var aplay = document.getElementById("set-autoplay");
+    aplay.checked = (settings.autoplay);
+    if (!aplay.checked) document.getElementById("autoplay").parentNode.parentNode.style.visibility = "hidden";
+    aplay.addEventListener('change', ()=>{
+        settings.autoplay = (aplay.checked);
+        var play = document.getElementById("autoplay").parentNode.parentNode;
+        if (aplay.checked) play.style.visibility = "visible";
+        else play.style.visibility = "hidden";
+    });
     var colmain = document.getElementById("color-main");
     colmain.value = settings.theme_color;
     colmain.addEventListener('change', ()=>{
@@ -1451,7 +1472,7 @@ function initSettings() {
         document.getElementById("toolbar").style.backgroundColor = settings.theme_color;
         document.getElementById("footer").style.backgroundColor = settings.theme_color;
     });
-    var colfont = document.getElementById("color-font")
+    var colfont = document.getElementById("color-font");
     colfont.value = settings.theme_font;
     colfont.addEventListener('change', ()=>{
         settings.theme_font = colfont.value;
@@ -1653,7 +1674,7 @@ function ws_connect() {
         if (data.connection.retryCount >= ws_options.maxRetries) {
             var con = document.getElementById("connection-failed");
             con.className = con.className.replace(/\bhidden\b/g, "");
-            showSnackbar(connectError1 + ws_options.maxRetries + connectError2, "error", 15000);
+            showSnackbar(language[settings.lang].connectError1 + ws_options.maxRetries + language[settings.lang].connectError2, "error", 15000);
         }
     };
 
